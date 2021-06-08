@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.4.1-gpu-jupyter
+FROM tensorflow/tensorflow:latest-gpu-jupyter
 
 RUN apt-get update && \
 	apt-get upgrade -y && \
@@ -37,6 +37,8 @@ RUN pip3 install --upgrade pip && \
 	pip3 install tokenizers && \
 	pip3 install pandas-profiling && \
 	pip3 install pylibjpeg pylibjpeg-libjpeg pydicom 
+
+RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
 
 WORKDIR /tf/object-detection
 

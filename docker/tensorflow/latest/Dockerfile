@@ -13,6 +13,7 @@ RUN apt-get update && \
 
 RUN pip3 install --upgrade pip && \
 	pip3 install jupyter_contrib_nbextensions && jupyter contrib nbextension install && \
+	pip3 install autopep8 && \
 	pip3 install install cython && \
 	pip3 install opencv-python && \
 	pip3 install pandas && \

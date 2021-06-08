@@ -1,0 +1,6 @@
+실행하기
+sudo docker run --gpus all -it --rm -v /home/hogbal/kaggle:/tf/notebooks -p 8888:8888 -p 6006:6006 tf2:[version]
+
+빌드하기
+sudo docker build -t tf2:[version] ./
+

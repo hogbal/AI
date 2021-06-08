@@ -13,6 +13,7 @@ RUN apt-get update && \
 
 RUN pip3 install --upgrade pip && \
 	pip3 install jupyter_contrib_nbextensions && jupyter contrib nbextension install && \
+	pip3 install autopep8 && \
 	pip3 install install cython && \
 	pip3 install opencv-python && \
 	pip3 install pandas && \
@@ -37,6 +38,12 @@ RUN pip3 install --upgrade pip && \
 	pip3 install tokenizers && \
 	pip3 install pandas-profiling && \
 	pip3 install pylibjpeg pylibjpeg-libjpeg pydicom 
+
+RUN jupyter nbextension enable code_prettify/autopep8 && \
+	jupyter nbextension enable execute_time/ExecuteTime && \
+	jupyter nbextension enable toc2/main && \
+	jupyter nbextension enable varInspector/main && \
+	jupyter nbextension enable codefolding/main
 
 RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
 

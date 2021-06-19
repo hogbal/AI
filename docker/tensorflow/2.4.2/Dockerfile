@@ -2,7 +2,7 @@ FROM tensorflow/tensorflow:2.4.2-gpu-jupyter
 
 RUN apt-get update && \
 	apt-get upgrade -y && \
-	apt-get install build-essential cmake -y && \
+	apt-get install build-essential -y && \
 	apt-get install pkg-config -y && \
 	apt-get install libjpeg-dev libtiff5-dev libpng-dev -y && \
 	apt-get install ffmpeg libavcodec-dev libavformat-dev libswscale-dev libxvidcore-dev libx264-dev libxine2-dev -y && \
@@ -11,6 +11,7 @@ RUN apt-get update && \
 	apt-get install libgtk-3-dev -y && \
 	apt-get install mesa-utils libgl1-mesa-dri libgtkgl2.0-dev libgtkglext1-dev -y && \
 	apt-get install libatlas-base-dev gfortran libeigen3-dev -y && \
+	apt-get install qt5-default -y && \
 	apt-get install python3-dev python3-numpy -y && \
 	apt-get install git -y && \
 	apt-get install libgl1-mesa-glx -y && \
@@ -56,3 +57,22 @@ RUN jupyter nbextension enable toc2/main && \
 	jupyter nbextension enable execute_time/ExecuteTime && \
 	jupyter nbextension enable collapsible_headings/main
 
+#setting cuda
+RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
+
+#install tensorflow 2 object detection api
+WORKDIR /tf/object-detection
+
+RUN git clone --depth 1 https://github.com/tensorflow/models && \
+	git clone https://github.com/cocodataset/cocoapi.git
+
+WORKDIR /tf/object-detection/cocoapi/PythonAPI
+
+RUN make && \
+	cp -r pycocotools /tf/object-detection/models/research
+
+WORKDIR /tf/object-detection/models/research
+
+RUN protoc object_detection/protos/*.proto --python_out=. && \
+	cp object_detection/packages/tf2/setup.py . && \
+	python3 -m pip install .

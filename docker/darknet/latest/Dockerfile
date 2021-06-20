@@ -99,6 +99,10 @@ RUN git clone https://github.com/AlexeyAB/darknet
 
 WORKDIR darknet
 
+RUN sed -i 's/GPU=0/GPU=1/' ./Makefile && \
+	sed -i 's/CUDNN=0/CUDNN=1/' ./Makefile && \
+	sed -i 's/OPENCV=0/OPENCV=1/' ./Makefile
+
 RUN mkdir build_release
 
 WORKDIR build_release
@@ -118,4 +122,5 @@ RUN chsh -s /usr/bin/zsh && \
 	git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
 	sed -i 's/plugins=(git)/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 
+WORKDIR /tf/darknet
 CMD ["zsh"]

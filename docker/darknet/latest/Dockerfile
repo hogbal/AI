@@ -17,6 +17,7 @@ RUN apt-get update && \
 	apt-get install wget -y && \
 	apt-get install zsh -y && \
 	apt-get install tmux -y && \
+	apt-get install vim -y && \
 	apt install libssl-dev -y && \
 	apt install fonts-powerline
 
@@ -105,7 +106,7 @@ WORKDIR build_release
 RUN cmake ..
 RUN cmake --build . --target install --parallel 8
 
-#install vim
+#setting vim && tmux
 COPY vimrc ~/.vimrc
 COPY tmux.conf ~/.tmux.conf
 

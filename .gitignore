@@ -1,2 +1,6 @@
 **/cuda/
 **/*.json
+**/*.tfrecord
+**/*.tflite
+
+**/workspace/

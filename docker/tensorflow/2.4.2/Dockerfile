@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.5.0-gpu-jupyter
+FROM tensorflow/tensorflow:2.4.2-gpu-jupyter
 
 RUN apt-get update && \
 	apt-get upgrade -y && \

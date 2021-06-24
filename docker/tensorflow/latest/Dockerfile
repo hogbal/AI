@@ -76,3 +76,5 @@ WORKDIR /tf/object-detection/models/research
 RUN protoc object_detection/protos/*.proto --python_out=. && \
 	cp object_detection/packages/tf2/setup.py . && \
 	python3 -m pip install .
+
+WORKDIR /tf

@@ -21,3 +21,21 @@ RUN protoc object_detection/protos/*.proto --python_out=. && \
 	python3 -m pip install .
 
 WORKDIR /tf
+
+#setting vim && tmux
+RUN apt-get update && \
+	apt-get upgrade -y && \
+	apt-get install wget -y && \
+	apt-get install git -y && \
+	apt-get install zsh -y && \
+	apt-get install tmux -y && \
+	apt-get install vim -y && \
+COPY vimrc ~/.vimrc
+COPY tmux.conf ~/.tmux.conf
+
+#install oh my zsh
+RUN chsh -s /usr/bin/zsh && \
+	sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" && \
+	sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/' ~/.zshrc && \
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
+	git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \

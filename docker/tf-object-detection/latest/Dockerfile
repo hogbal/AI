@@ -1,5 +1,18 @@
 FROM tensorflow/tensorflow:latest-devel-gpu
 
+RUN apt-get update && \
+	apt-get upgrade -y && \
+	apt-get install python3-dev && \
+	apt-get install wget -y && \
+	apt-get install git -y && \
+	apt-get install zsh -y && \
+	apt-get install tmux -y && \
+	apt-get install vim -y && \
+	apt install protobuf-compiler -y
+
+RUN pip3 install --upgrade pip && \
+    pip3 install cython
+
 #setting cuda
 RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
 
@@ -23,15 +36,8 @@ RUN protoc object_detection/protos/*.proto --python_out=. && \
 WORKDIR /tf
 
 #setting vim && tmux
-RUN apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install wget -y && \
-	apt-get install git -y && \
-	apt-get install zsh -y && \
-	apt-get install tmux -y && \
-	apt-get install vim -y && \
-COPY vimrc ~/.vimrc
-COPY tmux.conf ~/.tmux.conf
+COPY vimrc /root/.vimrc
+COPY tmux.conf /root/.tmux.conf
 
 #install oh my zsh
 RUN chsh -s /usr/bin/zsh && \
@@ -39,3 +45,6 @@ RUN chsh -s /usr/bin/zsh && \
 	sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/' ~/.zshrc && \
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
 	git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
+	sed -i 's/plugins=(git)/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
+
+CMD ["zsh"]

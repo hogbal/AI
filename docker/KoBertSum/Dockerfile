@@ -1,7 +1,6 @@
 FROM tensorflow/tensorflow:latest-devel-gpu
 
 RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
-
 RUN git clone https://github.com/uoneway/KoBertSum.git
 
 WORKDIR KoBertSum

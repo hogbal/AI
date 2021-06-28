@@ -1,19 +1,31 @@
-FROM tensorflow/tensorflow:latest-devel-gpu
-
-RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
-RUN git clone https://github.com/uoneway/KoBertSum.git
-
-WORKDIR KoBertSum
-
-RUN python3 main.py -task install
-RUN sed -it 's/python make_data.py -task train_bert -target_summary_sent abs -n_cpus/python make_data.py -task train_bert -target_summary_sent ext -n_cpus/' main.py
-RUN sed -it 's/extractive_test_v2.jsonl/test.jsonl/' src/make_data.py
+FROM pytorch/pytorch:1.9.0-cuda11.1-cudnn8-devel
 
 RUN apt-get update && \
 	apt-get upgrade -y && \
 	apt-get install vim -y && \
 	apt-get install tmux -y && \
-	apt-get install zsh -y
+	apt-get install zsh -y && \
+	apt-get install git -y && \
+	apt-get install wget -y && \
+	apt-get install language-pack-en -y && \
+	update-locale
+
+RUN pip install --upgrade pip && \
+	pip install multiprocess && \
+	pip install numpy && \
+	pip install pyrouge && \
+	pip install transformers && \
+	pip install tensorboardX && \
+	pip install torch && \
+	pip install cpython && \
+	pip install kss && \
+	pip install bs4 && \
+	pip install pandas && \
+	pip install nltk && \
+	pip install konlpy && \
+	pip install tensorboard 
+
+COPY KoBertSum /KoBertSum
 
 #setting vim && tmux
 COPY vimrc /root/.vimrc
@@ -27,4 +39,5 @@ RUN chsh -s /usr/bin/zsh && \
 	git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
 	sed -i 's/plugins=(git)/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 
+WORKDIR /KoBertSum
 CMD ["zsh"]

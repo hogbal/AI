@@ -1,8 +1,9 @@
-FROM python:latest
+FROM ubuntu:20.04
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install pyqt5-dev-tools -y && \
+	apt-get install python3 -y && \
+	apt-get install python3-pip -y && \
     apt-get install git -y && \
     apt install libxcb-xinerama0 -y
 

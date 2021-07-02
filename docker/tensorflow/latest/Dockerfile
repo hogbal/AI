@@ -49,7 +49,9 @@ RUN pip3 install --upgrade pip && \
 	pip3 install bert-for-tf2 && \
 	pip3 install tokenizers && \
 	pip3 install pandas-profiling && \
-	pip3 install pylibjpeg pylibjpeg-libjpeg pydicom
+	pip3 install pylibjpeg pylibjpeg-libjpeg pydicom && \
+	pip3 install nltk && \
+	pip3 install soykeyword
 
 RUN jupyter nbextension enable toc2/main && \
 	jupyter nbextension enable code_prettify/autopep8 && \

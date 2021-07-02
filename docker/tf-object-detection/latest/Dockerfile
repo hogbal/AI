@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-devel-gpu
+FROM tensorflow/tensorflow:latest-gpu-jupyter
 
 RUN apt-get update && \
 	apt-get upgrade -y && \

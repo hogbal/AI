@@ -8,7 +8,7 @@ RUN apt-get update && \
 	apt-get install zsh -y && \
 	apt-get install tmux -y && \
 	apt-get install vim -y && \
-	apt-get install libgl1-mesa-glx && \
+	apt-get install libgl1-mesa-glx -y && \
 	apt install protobuf-compiler -y
 
 RUN pip3 install --upgrade pip && \

@@ -18,6 +18,7 @@ RUN apt-get update && \
 	apt-get install g++ openjdk-8-jdk -y && \
 	apt-get install graphviz -y && \
 	apt-get install wget -y && \
+	apt-get install curl -y && \
 	apt install fonts-nanum-coding -y && \
 	apt install protobuf-compiler -y && \
 	apt install libssl-dev -y && \
@@ -51,7 +52,8 @@ RUN pip3 install --upgrade pip && \
 	pip3 install pandas-profiling && \
 	pip3 install pylibjpeg pylibjpeg-libjpeg pydicom && \
 	pip3 install nltk && \
-	pip3 install soykeyword
+	pip3 install soykeyword && \
+	pip3 install mglearn
 
 RUN jupyter nbextension enable toc2/main && \
 	jupyter nbextension enable code_prettify/autopep8 && \
@@ -61,3 +63,12 @@ RUN jupyter nbextension enable toc2/main && \
 
 #setting cuda
 RUN mv /usr/local/cuda/lib64/libcusolver.so.11 /usr/local/cuda/lib64/libcusolver.so.10
+
+#install mecab
+RUN bash <(curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh)
+
+WORKDIR /tmp/mecab-ko-dic-2.1.1-20180720
+RUN ./autogen.sh
+RUN ./configure
+RUN make
+RUN make install
